@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{emoji_dict[emoji_keys|random]|random}} Emojify - Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body style="background-color:{{color|random}}; transition: 3s;">
+    <div class="container text-center" style="padding:10px">
+        <h1>{{ emoji_dict[emoji_keys | random ] | random}}Emojify</h1>
+        <h3>{{ value }}</h3>
+        <small>{{ file_types }}</small>
+        <form action="/" method='POST' enctype=multipart/form-data>
+            <input type="file" name="user_img" accept="image/*">
+            <input type="submit" class="btn btn-primary"value="Submit Image to Model">
+        </form>
+        <div class="container text-center">
+            <p><small>Just a warning, image classification models are only as good as their training set.</small></p>
+            <p><small>This model has been trained on about ~1GB of images, about 500 images per class for a total of 16 classes</small></p>
+            <p><small>Similarly, this model has a lot of bias - distinctly in how I chose to define my classes and which phrases</small></p>
+            <p><small>I chose to search for while creating my dataset, of which either being the top few results</small></p>
+            <p><small>from a Google Image search.</small></p>
+
+            <small>You might see some strange results if your image is very complex or strange.</small>
+        </div>
+    </div>
+</body>
+<script>
+    var body = document.body;
+    var colors = ['green', 'yellow', 'pink', 'AliceBlue','Aqua','Bisque','Beige','LemonChiffon', 'MediumTurquoise'];
+    var emojiDict = {{emoji_dict|safe}};
+    var emojiKeys = {{emoji_keys|safe}};
+    var h1Tag = document.querySelector('h1');
+    setInterval(function () {
+        var tmp = emojiDict[emojiKeys[emojiKeys.length*Math.random() << 0]]
+        body.style.background = colors[Math.floor(Math.random()*colors.length)];
+        h1Tag.innerHTML = tmp[Math.floor(Math.random()*tmp.length)] + ' Emojify';
+    }, 2000);
+</script>
+</html>

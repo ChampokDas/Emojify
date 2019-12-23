@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{emoji_dict[emoji_keys|random]|random}}Emojify - Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body style="background-color:{{color|random}}; transition: 3s;">
+    <div class="container text-center" style="padding:10px">
+        <a class="text-left" href="/">Go back to root</a>
+        <h1>{{ emoji_dict[emoji_keys | random ] | random}}Results</h1>
+        <p>Top 3 emoji's:
+        {% for key in emoji %}
+            {{ emoji_dict[key] | random }}
+            {{ key }}
+        {% endfor %}
+        </p>
+    </div>
+
+    <div class="container-sm text-center">
+        <table class="table table-bordered table-hover table-sm w-50" style="margin:auto">
+            <thead class="thead-dark">
+            <tr>
+                <th>Class</th>
+                <th>% Confidence</th>
+            </tr>
+            </thead>
+            {% for key, val in all_results.items() %}
+            <tr>
+                <td>
+                    {{ emoji_dict[key] | random }}
+                    {{ key }}
+                </td>
+                <td>{{"%.2f" | format(val*100)}}%</td>
+            {% endfor %}
+            </tr>
+        </table>
+    </div>
+
+    <div class="container text-center" style="padding:25px">
+        <a href="/json_statistics/{{all_results|safe}}" onclick="console.log({{all_results|safe}})" download="img_statistics.json">Download full summary</a>
+    </div>
+</body>
+<script>
+    var body = document.body;
+    var colors = ['green', 'yellow', 'pink', 'AliceBlue','Aqua','Bisque','Beige','LemonChiffon', 'MediumTurquoise'];
+    var emojiDict = {{emoji_dict|safe}};
+    var emojiKeys = {{emoji_keys|safe}};
+    var h1Tag = document.querySelector('h1');
+    setInterval(function () {
+        var tmp = emojiDict[emojiKeys[emojiKeys.length*Math.random() << 0]]
+        body.style.background = colors[Math.floor(Math.random()*colors.length)];
+        h1Tag.innerHTML = tmp[Math.floor(Math.random()*tmp.length)] + ' Emojify';
+    }, 2000);
+</script>
+</html>
